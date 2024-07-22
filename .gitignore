@@ -1,5 +1,5 @@
 # Ignore virtual environment
-scraping-tools/
+.venv/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
