@@ -48,10 +48,16 @@ def liputan_enam_search(keyword, nPosting=10):
 
     # Setup Chrome options
     options = Options()
-    # options.add_argument('--headless')
+    
     options.add_argument('--disable-gpu')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
+    #headless mode argument below, need to be active
+    options.add_argument('--headless')
+    options.add_argument('--window-size=1920,1080')
+    options.add_argument('--disable-software-rasterizer')
+    options.add_argument('--ignore-certificate-errors')
+
 
     # Setup the Chrome driver
     service = Service()
@@ -65,11 +71,17 @@ def liputan_enam_search(keyword, nPosting=10):
 
         # # Perform the search
         search_input = driver.find_element(By.CLASS_NAME, 'navbar--top--search__input')
-        search_button = driver.find_element(By.CLASS_NAME, 'navbar--top--search__button')
+        # search_button = driver.find_element(By.CLASS_NAME, 'navbar--top--search__button')
+        search_button = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.CLASS_NAME, "navbar--top--search__button"))
+        )
+        
 
         search_input.clear()
         search_input.send_keys(keyword)
+        
         search_button.click()
+        # search_button.click()
 
         # Wait for search results to load
         # WebDriverWait(driver, 10).until(
